@@ -1,5 +1,7 @@
 package com.varela.maytheforcebewith_pedrovarela.model
 
+import java.io.Serializable
+
 data class Person (
     val birth_year: String,
     val eye_color: String,
@@ -18,4 +20,4 @@ data class Person (
     val url: String,
     var vehicles: ArrayList<String>,
     var favorite: Boolean = false
-)
+) : Serializable
