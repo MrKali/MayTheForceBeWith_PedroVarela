@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity() {
 
         setupRecyclerView()
 
+        progressbar.visibility = View.VISIBLE
+
         // start by populating data in main recycler view
         getDataFromAPI(totalOfPagesOfAPILoaded++, getDataInterface = object : GetDataInterface {
             override fun onDataRecover(persons: ArrayList<Person>) {
@@ -57,6 +59,7 @@ class MainActivity : AppCompatActivity() {
                     totalOfPagesOfAPILoaded++,
                     getDataInterface = object : GetDataInterface {
                         override fun onDataRecover(persons: ArrayList<Person>) {
+                            progressbar.visibility = View.GONE
                             personsData.addAll(persons)
                             personAdapter!!.notifyDataSetChanged()
                         }
@@ -70,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
-                if (linearLayoutManager?.let { isLastItemVisible(it) }!!){
+                if (linearLayoutManager?.let { isLastItemVisible(it) }!!) {
                     // if nothing is loading and there is still data to load from server
                     if (!isLoading && stillExistDataToLoadFromServer) {
                         showLoadingProgressBar()
@@ -179,7 +182,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * Check if is the last item visible on recycler view
      * */
-    private fun isLastItemVisible(layoutManager: LinearLayoutManager): Boolean{
+    private fun isLastItemVisible(layoutManager: LinearLayoutManager): Boolean {
         val lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition()
 
         val numItems = personAdapter?.itemCount
@@ -198,7 +201,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * Reset search view to original state
      * */
-    private fun resetSearchView(){
+    private fun resetSearchView() {
         searchView?.setQuery("", false)
         searchView?.isIconified = true
     }

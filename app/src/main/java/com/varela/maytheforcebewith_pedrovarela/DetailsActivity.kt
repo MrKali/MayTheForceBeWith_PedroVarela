@@ -50,8 +50,8 @@ class DetailsActivity : AppCompatActivity() {
     /**
      * Setup the recycler view and load the data
      * */
-    private fun updateRecyclerView(person: ArrayList<TwoItems>){
-        recycler_view.layoutManager = LinearLayoutManager (this)
+    private fun updateRecyclerView(person: ArrayList<TwoItems>) {
+        recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = PersonDetailsAdapter(person)
     }
 
@@ -59,7 +59,7 @@ class DetailsActivity : AppCompatActivity() {
      * This method will capitalize all the letter from a string
      * */
     @SuppressLint("DefaultLocale")
-    private fun String.capitalizeWords(): String{
+    private fun String.capitalizeWords(): String {
         return split(" ").joinToString(" ") { it.capitalize() }
     }
 
