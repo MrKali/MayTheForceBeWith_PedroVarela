@@ -5,18 +5,26 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.google.gson.Gson
 import com.varela.maytheforcebewith_pedrovarela.adapter.PersonDetailsAdapter
 import com.varela.maytheforcebewith_pedrovarela.model.Person
 import com.varela.maytheforcebewith_pedrovarela.model.TwoItems
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_details.*
+import kotlinx.android.synthetic.main.activity_main.recycler_view
+import org.json.JSONObject
 
 class DetailsActivity : AppCompatActivity() {
+
+    private var person: Person? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
 
-        val person = intent.getSerializableExtra(Constants.EXTRA_PERSON) as? Person
+        person = intent.getSerializableExtra(Constants.EXTRA_PERSON) as? Person
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -35,6 +43,10 @@ class DetailsActivity : AppCompatActivity() {
         array.add(TwoItems("Url", person?.url.toString().capitalizeWords()))
 
         updateRecyclerView(array)
+
+        btn_webhook.setOnClickListener{
+            requestWebHook()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -61,6 +73,25 @@ class DetailsActivity : AppCompatActivity() {
     @SuppressLint("DefaultLocale")
     private fun String.capitalizeWords(): String {
         return split(" ").joinToString(" ") { it.capitalize() }
+    }
+
+    private fun requestWebHook(){
+        // URL of request
+        val url = "http://webhook.site"
+
+        // execute the request
+        val jsonObjectRequest = JsonObjectRequest(
+            Request.Method.POST, url, JSONObject(Gson().toJson(person)),
+            Response.Listener {
+                // should handle the response from server
+            },
+            Response.ErrorListener {
+                // should handle the error
+            }
+        )
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
     }
 
 }
