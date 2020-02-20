@@ -18,6 +18,5 @@ data class Person (
     var species: ArrayList<String>,
     var starships: ArrayList<String>,
     val url: String,
-    var vehicles: ArrayList<String>,
-    var favorite: Boolean = false
+    var vehicles: ArrayList<String>
 ) : Serializable

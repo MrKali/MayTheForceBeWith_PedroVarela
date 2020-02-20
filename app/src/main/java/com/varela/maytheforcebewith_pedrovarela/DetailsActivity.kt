@@ -1,10 +1,10 @@
 package com.varela.maytheforcebewith_pedrovarela
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.varela.maytheforcebewith_pedrovarela.adapter.PersonAdapter
 import com.varela.maytheforcebewith_pedrovarela.adapter.PersonDetailsAdapter
 import com.varela.maytheforcebewith_pedrovarela.model.Person
 import com.varela.maytheforcebewith_pedrovarela.model.TwoItems
@@ -34,15 +34,6 @@ class DetailsActivity : AppCompatActivity() {
         array.add(TwoItems("Skin color", person?.skin_color.toString().capitalizeWords()))
         array.add(TwoItems("Url", person?.url.toString().capitalizeWords()))
 
-        // characteristics inside an array with URL
-        /*
-        array.add(TwoItems("Films", person?.films.toString().capitalizeWords()))
-        array.add(TwoItems("Homeworld", person?.homeworld.toString().capitalizeWords()))
-        array.add(TwoItems("Species", person?.species.toString().capitalizeWords()))
-        array.add(TwoItems("Star ships", person?.starships.toString().capitalizeWords()))
-        array.add(TwoItems("Vehicles", person?.vehicles.toString().capitalizeWords()))
-        */
-
         updateRecyclerView(array)
     }
 
@@ -67,8 +58,9 @@ class DetailsActivity : AppCompatActivity() {
     /**
      * This method will capitalize all the letter from a string
      * */
-    fun String.capitalizeWords(): String{
-        return split(" ").map { it.capitalize() }.joinToString(" ")
+    @SuppressLint("DefaultLocale")
+    private fun String.capitalizeWords(): String{
+        return split(" ").joinToString(" ") { it.capitalize() }
     }
 
 }
